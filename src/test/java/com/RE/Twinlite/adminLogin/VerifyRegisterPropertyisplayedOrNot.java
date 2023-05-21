@@ -41,6 +41,7 @@ public class VerifyRegisterPropertyisplayedOrNot {
 
 		
 		//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
+		//https://github.com/RAHUL-700/TEAM-B-SDET48.git
 		//hi
 	JavaUtilities jus=new JavaUtilities();
 		FileUtilities fus=new FileUtilities();

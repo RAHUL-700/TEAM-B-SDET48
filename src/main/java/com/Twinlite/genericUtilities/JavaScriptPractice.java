@@ -31,16 +31,16 @@ public class JavaScriptPractice {
 		js.scrollUp();
 		
 		//scrollTillElement //scrollbar1 (click on Response error link)
-		WebElement element= driver.findElement(By.xpath("//div[@data-testid='page.desktopTableOfContents']//div[.='API Response Error' and @class='']"))
+		/*WebElement element= driver.findElement(By.xpath("//div[@data-testid='page.desktopTableOfContents']//div[.='API Response Error' and @class='']"))
 	     js.scrollTillElement(element);
 		//click on element
-		js.click(element);
+		js.click(element);*/
 		
 		//scrollbar2 click on smily face
-		WebElement element2=driver.findElement(By.xpath("//div[.='Was this page helpful?']//div[@class='css-175oi2r r-18u37iz r-1awozwy']//div[@ar]"))
+		/*WebElement element2=driver.findElement(By.xpath("//div[.='Was this page helpful?']//div[@class='css-175oi2r r-18u37iz r-1awozwy']//div[@ar]"))
 	    js.scrollTillElement(element2);
 		//click on element
-		js.click(element2);
+		js.click(element2);*/
 	}
 
 }
