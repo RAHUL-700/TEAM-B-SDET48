@@ -21,7 +21,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
-public class VerifyThatAdminEditTheDetailsOfTheRegisteredProperty {
+public class VerifyThatAdminEditTheDetailsOfTheRegisteredPropertyTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
