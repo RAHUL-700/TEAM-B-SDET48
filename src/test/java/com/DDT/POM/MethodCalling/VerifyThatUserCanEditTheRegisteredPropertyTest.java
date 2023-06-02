@@ -34,7 +34,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyThatUserCanEditTheRegisteredProperty {
+public class VerifyThatUserCanEditTheRegisteredPropertyTest {
 
 	public static void main(String[] args) throws InterruptedException, EncryptedDocumentException, IOException {
 
