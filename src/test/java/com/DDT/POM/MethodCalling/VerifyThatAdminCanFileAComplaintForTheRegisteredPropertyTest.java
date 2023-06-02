@@ -32,7 +32,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyThatAdminCanFileAComplaintForTheRegisteredProperty {
+public class VerifyThatAdminCanFileAComplaintForTheRegisteredPropertyTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		WebDriver driver=null;
