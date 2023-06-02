@@ -30,7 +30,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyTheAdminCanSeeListOfUsersOnClickingRegisteredUsersButton {
+public class VerifyTheAdminCanSeeListOfUsersOnClickingRegisteredUsersButtonTest {
 
 	public static void main(String[] args) throws InterruptedException, EncryptedDocumentException, IOException {
 
