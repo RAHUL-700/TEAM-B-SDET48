@@ -35,7 +35,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyUserCanEditDetailsAndRiseComplaint {
+public class VerifyUserCanEditDetailsAndRiseComplaintTest {
 
 	public static void main(String[] args) throws InterruptedException, EncryptedDocumentException, IOException {
 
