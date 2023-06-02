@@ -1,4 +1,4 @@
- package com.RE.Twinlite.adminLogin;
+ package com.twinlite.editAndComplaint;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -81,7 +81,10 @@ WebDriver driver=null;
 		homePage.getRegisteruserbtn().click();
 		
 				//registering the user
-		 RegisterUserPage registerUserPage=new RegisterUserPage(driver);
+		RegisterUserPage registerUserPage=new RegisterUserPage(driver);
+        registerUserPage.registerUserInToApp( fullname, username1, mobile, email, password1, password1);
+		
+		/* RegisterUserPage registerUserPage=new RegisterUserPage(driver);
 			
 			registerUserPage.getFullname().sendKeys(fullname);
 			registerUserPage.getUsername1().sendKeys(username1);
@@ -90,16 +93,18 @@ WebDriver driver=null;
 			registerUserPage.getPassword1().sendKeys(password1);
 			registerUserPage.getC_password1().sendKeys(password1);
 			Thread.sleep(1000);
-			registerUserPage.getSubmitUserReg().click();
-			
+			registerUserPage.getSubmitUserReg().click();*/
 			
 				//log in to the application as a user
 			homePage.getLoginbtn().click();
+			/*
 			LoginPage loginpage=new LoginPage(driver);
 			loginpage.getUsername().sendKeys(username);
 			loginpage.getPassword().sendKeys(password);
-			loginpage.getLogin().click();
-		
+			loginpage.getLogin().click();*/
+			
+			LoginPage loginpage=new LoginPage(driver);
+			loginpage.loginAsUser(username, password);
 		
 				//fetching data for registering property using excel file
 				String alternat_mobile =	eus.getExcelData("LoginAdmin", 19, 1)+ranNo;
@@ -116,11 +121,14 @@ WebDriver driver=null;
 				String address =	eus.getExcelData("LoginAdmin", 31, 1);
 				String apartName=eus.getExcelData("LoginAdmin", 47, 1);
 				
-				
 				//registering a property into the application
 				UserLoginHome userloginhome=new UserLoginHome(driver);
 				userloginhome.getRegisterBtn().click();
 				
+				UserRegisterRoomsPage registerRoomsPage=new UserRegisterRoomsPage(driver);
+				registerRoomsPage.registerRoomsInToApp( fullname,  alternat_mobile,  mobile,  email, plotNo, rooms,country,state,city,rent,deposit ,accommodation, description,landmark,address);
+				
+				/*
 				UserRegisterRoomsPage registerRoomsPage=new UserRegisterRoomsPage(driver);
 				registerRoomsPage.getFullname().sendKeys(fullname);
 				registerRoomsPage.getAlternat_mobile().sendKeys(alternat_mobile);
@@ -152,7 +160,7 @@ Thread.sleep(2000);
 if(successText.contains("successfull"))
 	System.out.println("property registered successfully");
 else
-	System.out.println("property registration failed");
+	System.out.println("property registration failed");*/
 
 //logout as user
 		UserLoginHome userLoginHome=new UserLoginHome(driver);
@@ -160,10 +168,11 @@ else
 		
 		// log in as user again
 		homePage.getLoginbtn().click();
+		loginpage.loginAsUser(username, password);
+		/*
 		loginpage.getUsername().sendKeys(username);
 		loginpage.getPassword().sendKeys(password);
-		loginpage.getLogin().click();
-		
+		loginpage.getLogin().click();*/
 		
 		//edit and complaint on the property
 		userloginhome.getDetailsBtn().click();
@@ -174,12 +183,12 @@ else
 		s1.selectByValue("1");
 		String otherdetails = eus.getExcelData("LoginAdmin", 34, 1);
 		UserRegisterRoomsPage userRegisterRoomsPage=new UserRegisterRoomsPage(driver);
+		userRegisterRoomsPage.editAltNumber(alternat_mobile,otherdetails, driver);
+		/*
 		userRegisterRoomsPage.getOtherTxtBx().sendKeys("hello");
-		userRegisterRoomsPage.getSubmitRoomsReg().click();
-		
+		userRegisterRoomsPage.getSubmitRoomsReg().click();*/
 		
 		//rising a complaint
-		
 		userLoginHome.getDetailsBtn().click();
 		UserDetails_UpdatePage userDetails_UpdatePage=new UserDetails_UpdatePage(driver);
 		userDetails_UpdatePage.getComplaintBtn().click();
@@ -189,12 +198,13 @@ else
 				String complaint =eus.getExcelData("LoginAdmin", 39, 1)+ranNo;
 				
 				AdminandUserComplaintPage adminandUserComplaintPage=new AdminandUserComplaintPage(driver);
+				adminandUserComplaintPage.risingAComplaint(complaint,compname);
+				/*
 				adminandUserComplaintPage.getCompTxtBx().sendKeys(complaint);
 				adminandUserComplaintPage.getApartTxtBx().sendKeys(compname);
 				adminandUserComplaintPage.getSubmitBtn().click();
 				String scName=wdus.takeScreenShot(driver,"sc");
 				System.out.println(scName);
-				
 				
 		//verifying the complaint
 				String check =adminandUserComplaintPage.getSuccessMsg().getText();
@@ -203,9 +213,9 @@ else
 			
 		}
 		else 
-			System.out.println("complaint rising failed");
+			System.out.println("complaint rising failed");*/
 	
-		driver.close();
+		driver.quit();
 	}
 
 }

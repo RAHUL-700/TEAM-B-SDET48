@@ -52,6 +52,18 @@ public class AdminandUserComplaintPage {
 			return submitBtn;
 		}
 		
-		
+		public void risingAComplaint(String complaint,String compname) 
+		{
+			getCompTxtBx().sendKeys(complaint);
+			getApartTxtBx().sendKeys(compname);
+			getSubmitBtn().click();
+			
+			//verifying the complaint
+			String check =getSuccessMsg().getText();
+			if(check.contains("Sent Successfully"))
+				System.out.println("complaint rised successfully");
+			else 
+				System.out.println("complaint rising failed");
+		}
 		
 }

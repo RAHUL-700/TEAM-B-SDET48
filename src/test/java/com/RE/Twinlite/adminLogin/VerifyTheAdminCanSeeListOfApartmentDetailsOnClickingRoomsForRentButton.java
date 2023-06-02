@@ -79,7 +79,8 @@ WebDriverManager.chromedriver().setup();
         
 				//registering the user
  RegisterUserPage registerUserPage=new RegisterUserPage(driver);
-		
+ registerUserPage.registerUserInToApp( fullname, username1, mobile, email, password1, password1);
+		/*
 		registerUserPage.getFullname().sendKeys(fullname);
 		registerUserPage.getUsername1().sendKeys(username1);
 		registerUserPage.getMobile().sendKeys(mobile);
@@ -87,17 +88,20 @@ WebDriverManager.chromedriver().setup();
 		registerUserPage.getPassword1().sendKeys(password1);
 		registerUserPage.getC_password1().sendKeys(password1);
 		Thread.sleep(1000);
-		registerUserPage.getSubmitUserReg().click();
+		registerUserPage.getSubmitUserReg().click();*/
 				
 				//log in to the application as a user
 		homePage.getLoginbtn().click();
-
+		LoginPage loginpage=new LoginPage(driver);
+		loginpage.loginAsUser(username, password);
+		/*
 		LoginPage loginpage=new LoginPage(driver);
 		loginpage.getUsername().sendKeys(username);
 		loginpage.getPassword().sendKeys(password);
-		loginpage.getLogin().click();
+		loginpage.getLogin().click();*/
 		
 		//registering a APPARTMENT property into the application
+		
 				String alternat_mobile =	eus.getExcelData("LoginAdmin", 19, 1)+ranNo;
 				String plotNo =	eus.getExcelData("LoginAdmin", 21, 1);
 				String rooms =	eus.getExcelData("LoginAdmin", 22, 1);
@@ -111,6 +115,9 @@ WebDriverManager.chromedriver().setup();
 				String landmark =	eus.getExcelData("LoginAdmin", 30, 1);
 				String address =	eus.getExcelData("LoginAdmin", 31, 1);
 				String apartName=eus.getExcelData("LoginAdmin", 47, 1);
+				String NoOfFlats=eus.getExcelData("LoginAdmin", 49, 1);
+				String NoOfrooms = eus.getExcelData("LoginAdmin", 50, 1);
+				String area =eus.getExcelData("LoginAdmin", 51, 1);
 				
 				
 				UserLoginHome userLoginHome=new UserLoginHome(driver);
@@ -118,6 +125,7 @@ WebDriverManager.chromedriver().setup();
 				UserRegisterRoomsPage userRegisterRoomsPage=new UserRegisterRoomsPage(driver);
 				userRegisterRoomsPage.getRegAppartmtBtn().click();//clicking register apartment button in register rooms page
 				ApartmentRegPage apartmentRegPage=new ApartmentRegPage(driver);
+				/*
 				apartmentRegPage.getApartname().sendKeys(apartName);
 				Thread.sleep(2000);
 				apartmentRegPage.getMobile().sendKeys(mobile);
@@ -155,23 +163,31 @@ WebDriverManager.chromedriver().setup();
 				s1.selectByValue("1");
 				driver.findElement(By.xpath("//h2[.='Apartment Room']/../form//button[.='Submit']")).click();
 				
+				
 				String successText = apartmentRegPage.getSuccessText().getText();
 		if(successText.contains("successfull"))
 			System.out.println("Apartment registered successfully");
 		else
-			System.out.println("Apartment registration failed");
+			System.out.println("Apartment registration failed");}*/
+	
+		apartmentRegPage.registerApartmentInToApp(driver, apartName,  mobile,  alternat_mobile,  email ,  plotNo, country, state, city,
+			 landmark ,  address,   fullname, NoOfFlats,  NoOfrooms, area ,  rent, deposit,
+			 accommodation,  description);
+		
 		driver.findElement(By.xpath("//a[.='Logout']")).click();
-		
-		
 		
 		String adminusn = eus.getExcelData("LoginAdmin", 13, 1);
 		String adminpwd = eus.getExcelData("LoginAdmin", 14, 1);
 		
 		//log in to the application as a admin
  homePage.getLoginbtn().click();
+ /*
  loginpage.getUsername().sendKeys(adminusn);
  loginpage.getPassword().sendKeys(adminpwd);
-	loginpage.getLogin().click();
+	loginpage.getLogin().click();*/
+ 
+ 
+	loginpage.loginAsUser( adminusn, adminpwd);
 				
 		//click on registered users and check for newly registered user
 				driver.findElement(By.xpath("//div[contains(.,'Rooms for Rent: ') and @class='alert alert-warning']")).click();
@@ -181,12 +197,12 @@ WebDriverManager.chromedriver().setup();
 					String roomName = room.getText();
 					if(roomName.contains(plotNo)) {
 				              flag=true;
-				              System.out.println("room was found in the admin's registered room list successfully");
+				              System.out.println("apartment was found in the admin's registered room list successfully");
 				              break;
 				}}
 				if(!flag) 
-					System.out.println("User was not  found in the admin's registered room list successfully");
-				driver.close();
+					System.out.println("apartment was not  found in the admin's registered room list successfully");
+				driver.quit();
 	}
 
 }

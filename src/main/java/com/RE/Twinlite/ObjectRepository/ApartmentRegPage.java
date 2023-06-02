@@ -1,9 +1,13 @@
 package com.RE.Twinlite.ObjectRepository;
 
+import java.io.File;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 public class ApartmentRegPage {
 
@@ -147,6 +151,52 @@ public class ApartmentRegPage {
 				return RegRoomsBtn;
 			}
 			
+			public void registerApartmentInToApp(WebDriver driver,String apartName, String mobile, String alternat_mobile, String email , String plotNo,String country,String state,String city,
+					String landmark , String address, String  fullname,String NoOfFlats, String NoOfrooms,String area , String rent,String deposit,
+					String accommodation, String description) throws InterruptedException
+			{
+				getApartname().sendKeys(apartName);
+				Thread.sleep(1000);
+				getMobile().sendKeys(mobile);
+				getAlternat_mobile().sendKeys(alternat_mobile);
+				getEmail().sendKeys(email);
+				getPlotNo().sendKeys(plotNo);
+				getCountry().sendKeys(country);
+				getState().sendKeys(state);
+				getCity().sendKeys(city);
+				getLandmark().sendKeys(landmark);
+				getAddress().sendKeys(address);
+		
+		//uploading image
+				File f=new File("./src/test/resources/Screenshot (38).png");
+				String abspath = f.getAbsolutePath();
+				getUploadImg().sendKeys(abspath);
+				Thread.sleep(1000);
+				getMoreFlatsBtn().click();
+				
+				
+				
+				getFullname().sendKeys(fullname);
+				getNoOfFlats().sendKeys(NoOfFlats);
+				getNoOfRooms().sendKeys(NoOfrooms);
+				getArea().sendKeys(area);
+				getRent().sendKeys(rent);
+				getDeposit().sendKeys(deposit);
+				getAccommodation().sendKeys(accommodation);
+				getDescription().sendKeys(description);
 
+				WebElement options2 = driver.findElement(By.xpath("//select[@id='vacant']"));
+				Select s1=new Select(options2);
+				s1.selectByValue("1");
+				driver.findElement(By.xpath("//h2[.='Apartment Room']/../form//button[.='Submit']")).click();
+				
+				
+				String successText = getSuccessText().getText();
+		if(successText.contains("successfull"))
+			System.out.println("Apartment registered successfully");
+		else
+			System.out.println("Apartment registration failed");
+			}
+			
 		
 }

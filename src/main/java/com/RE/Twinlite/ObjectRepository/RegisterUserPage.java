@@ -1,15 +1,22 @@
 package com.RE.Twinlite.ObjectRepository;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Random;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.Twinlite.genericUtilities.JavaUtilities;
 /**
  * 
  * @author satya
  *
  */
-public class RegisterUserPage {
+public class RegisterUserPage{
 
 	
 	//declaration 
@@ -64,11 +71,32 @@ public class RegisterUserPage {
 		return c_password1;
 	}
 
-
-
 	public WebElement getSubmitUserReg() {
 		return submitUserReg;
 	}
-	
-	
+	 
+      public void registerUserInToApp( String fullname,String Username2,String mobile,String email,String password1,String password2) throws InterruptedException
+      {
+      getFullname().sendKeys(fullname);
+     // getUsername1.sendKeys(Username2);
+      username1.sendKeys(Username2);
+	getMobile().sendKeys(mobile);
+	getEmail().sendKeys(email);
+	getPassword1().sendKeys(password1);
+	getC_password1().sendKeys(password1);
+	Thread.sleep(1000);
+	getSubmitUserReg().click();
+	}
+      
+      Random ra=new Random();
+      int ranNo=ra.nextInt(1000);
+      
+    //bussiness library
+  	public void createUser(HashMap<String, String> map,WebDriver driver) {
+  		for(Entry<String, String> set:map.entrySet()) {
+  			String al=set.getValue(); 
+  				driver.findElement(By.id(set.getKey())).sendKeys(al);
+  	}     
+
+  	}  	
 }

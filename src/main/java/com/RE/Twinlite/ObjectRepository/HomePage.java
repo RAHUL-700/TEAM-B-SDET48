@@ -42,6 +42,8 @@ public class HomePage {
 	public WebElement getHome_logoBtn() {
 		return home_logoBtn;
 	}
+	
+	
 
 	
 }

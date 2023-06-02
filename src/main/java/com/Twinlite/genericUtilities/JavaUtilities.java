@@ -14,7 +14,7 @@ public class JavaUtilities {
 	 */
 	public int getRandomNumber() {
 		Random ran=new Random();
-		int ranNo = ran.nextInt(900)+100;
+		int ranNo = ran.nextInt(1000);
 		return ranNo;
 	}
 	/**

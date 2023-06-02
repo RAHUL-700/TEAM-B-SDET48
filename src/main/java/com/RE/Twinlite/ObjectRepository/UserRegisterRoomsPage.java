@@ -1,15 +1,21 @@
 package com.RE.Twinlite.ObjectRepository;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 public class UserRegisterRoomsPage {
 	//declaration 
 		@FindBy(xpath="//input[@id='fullname']")private WebElement fullname;
 		@FindBy(xpath="//h2[.='Register Room']/../form//input[@name='mobile']")private WebElement mobile;
-		@FindBy(xpath="//h2[.='Register Room']/../form//input[@name='alternat_mobile']")private WebElement alternat_mobile;
+		@FindBy(xpath="//h2[.='Register Room']/../form//input[@id='alternat_mobile']")private WebElement alternat_mobile;
 		@FindBy(xpath="//h2[.='Register Room']/../form//input[@name='email']")private WebElement email;
 		@FindBy(xpath="//h2[.='Register Room']/../form//input[@name='plot_number']")private WebElement plotNo;
 		@FindBy(xpath="(//input[@name='rooms'])")private WebElement rooms;
@@ -122,5 +128,63 @@ public class UserRegisterRoomsPage {
 		public WebElement getRegAppartmtBtn() {
 			return RegAppartmtBtn;
 		}
+		WebDriverUtilities wdus=new WebDriverUtilities();
+		public void registerRoomsInToApp(String fullname, String alternat_mobile, String mobile, String email, String plotNo,String rooms,String country,String state, String city, String rent, String deposit ,String accommodation, String description,String landmark, String  address) throws InterruptedException
+		{
+			getFullname().sendKeys(fullname);
+			getAlternat_mobile().sendKeys(alternat_mobile);
+			getMobile().sendKeys(mobile);
+			getEmail().sendKeys(email);
+			getPlotNo().sendKeys(plotNo);
+			getRooms().sendKeys(rooms);
+			getCountry().sendKeys(country);
+			getState().sendKeys(state);
+			getCity().sendKeys(city);
+			getRent().sendKeys(rent);
+			getDeposit().sendKeys(deposit);
+			getAccommodation().sendKeys(accommodation);
+			getDescription().sendKeys(description);
+			getLandmark().sendKeys(landmark);
+			getAddress().sendKeys(address);
+			
+			WebElement options = getVacantOrOccupied();
+			
+			Select s=new Select(options);
+			s.selectByIndex(0);
+			
+			//uploading image
+			WebElement scUploadElement = getUploadImg();
+					Thread.sleep(2000);
+					wdus.fileUpload(scUploadElement, "./src/test/resources/Screenshot (38).png");
+					getSubmitRoomsReg().click();
+					Thread.sleep(2000);
+			          String successText = getSuccessText().getText();
+					if(successText.contains("successfull"))
+						System.out.println("property registered successfully");
+					else
+						System.out.println("property registration failed");
+		}
 		
+		public void editAltNumber(String alternat_mobile, String msg, WebDriver driver) {
+			getAlternat_mobile().clear();
+			getAlternat_mobile().sendKeys(alternat_mobile);
+			getOtherTxtBx().sendKeys("hello");
+			getSubmitRoomsReg().click();
+			
+			//verify if the mobile number is changed
+			UserLoginHome userloginhome=new UserLoginHome(driver);
+			userloginhome.getDetailsBtn().click();
+			List<WebElement> allPhones = driver.findElements(By.xpath("//p[contains(.,'"+alternat_mobile+"')]"));
+			boolean flag=false;
+			for(WebElement phone:allPhones) {
+				String phoneNo =phone.getText();
+				if(phoneNo.contains(alternat_mobile)) {
+			              flag=true;
+			              System.out.println("phone number was edited successfully by the admin/user");
+			              break;
+			}}
+			if(!flag) 
+				System.out.println("admin/user could not edit the phone number successfully");
+			
+		}
 }

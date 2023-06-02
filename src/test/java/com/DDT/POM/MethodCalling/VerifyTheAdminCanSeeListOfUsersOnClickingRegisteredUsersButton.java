@@ -1,4 +1,4 @@
-package com.RE.Twinlite.adminLogin;
+package com.DDT.POM.MethodCalling;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -73,28 +73,19 @@ WebDriver driver=null;
         
 				//registering the user
  RegisterUserPage registerUserPage=new RegisterUserPage(driver);
+ //register user in to the application
  registerUserPage.registerUserInToApp( fullname, username1, mobile, email, password1, password1);
-		/*
-		registerUserPage.getFullname().sendKeys(fullname);
-		registerUserPage.getUsername1().sendKeys(username1);
-		registerUserPage.getMobile().sendKeys(mobile);
-		registerUserPage.getEmail().sendKeys(email);
-		registerUserPage.getPassword1().sendKeys(password1);
-		registerUserPage.getC_password1().sendKeys(password1);
-		Thread.sleep(1000);
-		registerUserPage.getSubmitUserReg().click();*/
 				
 				//log in to the application as a user
 		homePage.getLoginbtn().click();
 
 		LoginPage loginpage=new LoginPage(driver);
-		/*loginpage.getUsername().sendKeys(username);
-		loginpage.getPassword().sendKeys(password);
-		loginpage.getLogin().click();*/
+		//log in to the app as user
 		loginpage.loginAsUser(username, password);
 		
 		UserLoginHome userLoginHome=new UserLoginHome(driver);
 		Thread.sleep(1000);
+		//logout as user
 		userLoginHome.getLogoutBtn().click();
 		
 		
@@ -103,12 +94,8 @@ WebDriver driver=null;
 		
 		//log in to the application as a admin
 		homePage.getLoginbtn().click();
+		//log in as admin in to the app
 		loginpage.loginAsUser(adminusn, adminpwd);
-		/*
-		loginpage.getUsername().sendKeys(adminusn);
-		loginpage.getPassword().sendKeys(adminpwd);
-		loginpage.getLogin().click();
-		*/
 		
 		//click on registered users and check for newly registered user
 				driver.findElement(By.xpath("//div[contains(.,'Registered Users: ') and @class='alert alert-warning']")).click();

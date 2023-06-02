@@ -43,4 +43,11 @@ public class SearchPage {
 	public WebElement getSearch2Btn() {
 		return Search2Btn;
 	}
+	
+	public void searchTheProperty(String SearchKey, String searchCity) throws InterruptedException {
+		getKeywordTxtBx().sendKeys(SearchKey);
+		getLocationTxtBx().sendKeys(searchCity);
+		Thread.sleep(1000);
+		getSearch2Btn().click();	
+	}
 }

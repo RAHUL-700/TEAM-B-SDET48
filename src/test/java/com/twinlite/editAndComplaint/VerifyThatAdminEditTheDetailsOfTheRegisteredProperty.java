@@ -1,4 +1,4 @@
-  package com.RE.Twinlite.adminLogin;
+  package com.twinlite.editAndComplaint;
 import java.io.IOException;
 import java.util.List;
 
@@ -65,21 +65,28 @@ public class VerifyThatAdminEditTheDetailsOfTheRegisteredProperty {
 			HomePage homePage=new HomePage(driver);
 			homePage.getLoginbtn().click();
 
+			/*
 			LoginPage loginpage=new LoginPage(driver);
 			loginpage.getUsername().sendKeys(adminusn);
 			loginpage.getPassword().sendKeys(adminpwd);
-			loginpage.getLogin().click();
+			loginpage.getLogin().click();*/
+			
+			LoginPage loginpage=new LoginPage(driver);
+			loginpage.loginAsUser(username, password);
 		
 		//goto details and edit the details of a property registered by the user
 			UserLoginHome userloginhome=new UserLoginHome(driver);
 			userloginhome.getDetailsBtn().click();
-		driver.findElement(By.xpath("//p[contains(.,'8884411155')]/../../..//a")).click();
+		driver.findElement(By.xpath("//p[contains(.,'8884771323')]/../../..//a")).click();
 	
 		
 		String alternat_mobile =	eus.getExcelData("LoginAdmin", 19, 1)+ranNo;
 		
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		UserRegisterRoomsPage userRegisterRoomsPage=new UserRegisterRoomsPage(driver);
+		userRegisterRoomsPage.editAltNumber(alternat_mobile,"hello", driver);
+		
+		/*
 		userRegisterRoomsPage.getAlternat_mobile().clear();
 		userRegisterRoomsPage.getAlternat_mobile().sendKeys(alternat_mobile);
 		userRegisterRoomsPage.getOtherTxtBx().sendKeys("hello");
@@ -97,8 +104,9 @@ public class VerifyThatAdminEditTheDetailsOfTheRegisteredProperty {
 		              break;
 		}}
 		if(!flag) 
-			System.out.println("admin could not edit the phone number successfully");
-		driver.close();
+			System.out.println("admin could not edit the phone number successfully");*/
+		Thread.sleep(1000);
+		driver.quit();
 		
 		
 	}

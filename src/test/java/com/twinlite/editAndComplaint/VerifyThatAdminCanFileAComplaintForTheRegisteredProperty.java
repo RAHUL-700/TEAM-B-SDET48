@@ -1,4 +1,4 @@
-package com.RE.Twinlite.adminLogin;
+package com.twinlite.editAndComplaint;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,6 +76,10 @@ public class VerifyThatAdminCanFileAComplaintForTheRegisteredProperty {
 		driver.findElement(By.xpath("//a[.='Register']")).click();
 		
 		//registering the user
+		 RegisterUserPage registerUserPage=new RegisterUserPage(driver);
+	        registerUserPage.registerUserInToApp( fullname, username1, mobile, email, password1, password1);
+	        
+		/*
 		RegisterUserPage registerUserPage=new RegisterUserPage(driver);
 		
 		registerUserPage.getFullname().sendKeys(fullname);
@@ -85,17 +89,21 @@ public class VerifyThatAdminCanFileAComplaintForTheRegisteredProperty {
 		registerUserPage.getPassword1().sendKeys(password1);
 		registerUserPage.getC_password1().sendKeys(password1);
 		Thread.sleep(1000);
-		registerUserPage.getSubmitUserReg().click();
+		registerUserPage.getSubmitUserReg().click();*/
 		
 		
 		//log in to the application as a user
 		HomePage homePage=new HomePage(driver);
 		homePage.getLoginbtn().click();
-
+		
+		LoginPage loginpage=new LoginPage(driver);
+		loginpage.loginAsUser(username, password);
+/*
 		LoginPage loginpage=new LoginPage(driver);
 		loginpage.getUsername().sendKeys(username);
 		loginpage.getPassword().sendKeys(password);
 		loginpage.getLogin().click();
+	*/
 		
 		//fetching data for registering property using excel file
 		String alternat_mobile =	eus.getExcelData("LoginAdmin", 19, 1)+ranNo;
@@ -118,6 +126,10 @@ public class VerifyThatAdminCanFileAComplaintForTheRegisteredProperty {
 		userloginhome.getRegisterBtn().click();
 		
 		UserRegisterRoomsPage registerRoomsPage=new UserRegisterRoomsPage(driver);
+		registerRoomsPage.registerRoomsInToApp( fullname,  alternat_mobile,  mobile,  email, plotNo, rooms,country,state,city,rent,deposit ,accommodation, description,landmark,address);
+		
+		
+		/*
 		registerRoomsPage.getFullname().sendKeys(fullname);
 		registerRoomsPage.getAlternat_mobile().sendKeys(alternat_mobile);
 		registerRoomsPage.getMobile().sendKeys(mobile);
@@ -142,12 +154,14 @@ public class VerifyThatAdminCanFileAComplaintForTheRegisteredProperty {
 		wdus.fileUpload(scUploadElement, "./src/test/resources/Screenshot (38).png");
 		
 		registerRoomsPage.getSubmitRoomsReg().click();
+		
+		
 Thread.sleep(2000);
   String successText = registerRoomsPage.getSuccessText().getText();
 if(successText.contains("successfull"))
 	System.out.println("property registered successfully");
 else
-	System.out.println("property registration failed");
+	System.out.println("property registration failed");*/
 
 
       UserLoginHome userLoginHome = new UserLoginHome(driver);
@@ -157,32 +171,33 @@ else
 homePage.getLoginbtn().click();
 String adminusn = eus.getExcelData("LoginAdmin", 13, 1);
 String adminpwd = eus.getExcelData("LoginAdmin", 14, 1);
+loginpage.loginAsUser(adminusn, adminpwd);
+/*
 loginpage.getUsername().sendKeys(adminusn);
 loginpage.getPassword().sendKeys(adminpwd);
-loginpage.getLogin().click();
+loginpage.getLogin().click();*/
 		
 
 		//rising a complaint
-
 userLoginHome.getDetailsBtn().click();
 UserDetails_UpdatePage userDetails_UpdatePage=new UserDetails_UpdatePage(driver);
 userDetails_UpdatePage.getComplaintBtn().click();
-		
 		
 		String compname =eus.getExcelData("LoginAdmin", 38, 1)+ranNo;
 		String complaint =eus.getExcelData("LoginAdmin", 39, 1)+ranNo;
 
 		AdminandUserComplaintPage adminandUserComplaintPage=new AdminandUserComplaintPage(driver);
+		adminandUserComplaintPage.risingAComplaint(complaint,compname);
+		/*
 		adminandUserComplaintPage.getCompTxtBx().sendKeys(complaint);
 		adminandUserComplaintPage.getApartTxtBx().sendKeys(compname);
 		adminandUserComplaintPage.getSubmitBtn().click();
-		
 		//verifying the complaint
 		String check =adminandUserComplaintPage.getSuccessMsg().getText();
 		if(check.contains("Sent Successfully"))
 			System.out.println("complaint rised successfully");
 		else 
-			System.out.println("complaint rising failed");
+			System.out.println("complaint rising failed");*/
 	
 		driver.close();
 	}

@@ -33,12 +33,14 @@ public class LoginPage {
 		return password;
 	}
 
-
-
 	public WebElement getLogin() {
 		return login;
 	}
-
+	public void loginAsUser(String username,String password) {
+		getUsername().sendKeys(username);
+		getPassword().sendKeys(password);
+		getLogin().click();
+	}
 	
 	
 }

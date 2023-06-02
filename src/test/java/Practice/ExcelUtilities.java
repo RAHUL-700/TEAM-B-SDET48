@@ -1,8 +1,10 @@
-package com.Twinlite.genericUtilities;
+package Practice;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -12,6 +14,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.testng.annotations.DataProvider;
+
+import com.Twinlite.genericUtilities.JavaUtilities;
 /**
  * this class methods to insert data and read data from excel files
  * @author satya
@@ -67,20 +72,41 @@ public int getRowNum(String sheetname,int rownum) throws IOException {
 	int row = sheet.getLastRowNum();
 	return row;
 }
+
 public Object[][] data20(String sheetname) throws EncryptedDocumentException, IOException {
 	
-	FileInputStream fis= new FileInputStream(IPATHConstants.excelfilepath);
+	FileInputStream fis=new FileInputStream(IPATHConstants.excelfilepath);
 	Workbook wb=WorkbookFactory.create(fis);
-	Sheet sh = wb.getSheet(sheetname);
+	Sheet sh=wb.getSheet(sheetname);
 	int lastRow = sh.getLastRowNum()+1;
-	int lastCol = sh.getRow(0).getLastCellNum();
-	Object[][] obj=new Object[lastRow][lastCol];
+	int lastCol=sh.getRow(0).getLastCellNum();
+	Object[][] obj=new Object[lastRow][lastCol];//declaring an array of 2 dimension
 	for(int i=0;i<lastRow;i++) {
-		for(int j=0;j<lastCol;j++) {
+		for(int j=0;j<lastRow;j++) 
+		{
 			obj[i][j]=sh.getRow(i).getCell(j).getStringCellValue();
 		}
+		}return obj;
 	}
-	return obj;
+
+public HashMap<String,String> getMultipleData() throws EncryptedDocumentException, IOException {
+	
+	FileInputStream fis=new FileInputStream(IPATHConstants.excelfilepath);
+	Workbook wb=WorkbookFactory.create(fis);
+	Sheet sh = wb.getSheet("RegUser2");
+	int count=sh.getLastRowNum();
+	
+	JavaUtilities javautils=new JavaUtilities();
+	HashMap<String, String> map=new HashMap<String, String>();
+	for(int i=0;i<=count;i++) {
+		String key=sh.getRow(i).getCell(0).getStringCellValue();
+		String value=sh.getRow(i).getCell(1).getStringCellValue();
+		
+		map.put(key, value); //inserting id and value into the HashMap
+	}
+	return map;
 }
+
+
 
 }

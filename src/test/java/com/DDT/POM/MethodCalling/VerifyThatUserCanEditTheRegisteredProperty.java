@@ -1,4 +1,4 @@
-package com.RE.Twinlite.adminLogin;
+package com.DDT.POM.MethodCalling;
 
 import java.awt.Window;
 import java.io.File;
@@ -59,7 +59,6 @@ public class VerifyThatUserCanEditTheRegisteredProperty {
 			driver=new EdgeDriver();
 		}
 		
-		
 		String url=fus.getPropertyKeyValue("url");
 		String username=fus.getPropertyKeyValue("username");
 		String password=fus.getPropertyKeyValue("password");
@@ -79,29 +78,19 @@ public class VerifyThatUserCanEditTheRegisteredProperty {
         String password1 =eus.getExcelData("LoginAdmin", 5, 1);		
         String c_password =	eus.getExcelData("LoginAdmin", 6, 1);
         
-        
         HomePage homePage = new HomePage(driver);
 		homePage.getRegisteruserbtn().click();
-				//registering the user
-        RegisterUserPage registerUserPage=new RegisterUserPage(driver);
 		
-      		registerUserPage.getFullname().sendKeys(fullname);
-      		registerUserPage.getUsername1().sendKeys(username1);
-      		registerUserPage.getMobile().sendKeys(mobile);
-      		registerUserPage.getEmail().sendKeys(email);
-      		registerUserPage.getPassword1().sendKeys(password1);
-      		registerUserPage.getC_password1().sendKeys(password1);
-      		Thread.sleep(1000);
-      		registerUserPage.getSubmitUserReg().click();
-				
+				//registering the user using the methods from pom classes
+        RegisterUserPage registerUserPage=new RegisterUserPage(driver);
+        registerUserPage.registerUserInToApp( fullname, username1, mobile, email, password1, password1);
+		
 		//log in to the application as a user
-      		
+        
+        //click on the login button 
     		homePage.getLoginbtn().click();
-
     		LoginPage loginpage=new LoginPage(driver);
-    		loginpage.getUsername().sendKeys(username);
-    		loginpage.getPassword().sendKeys(password);
-    		loginpage.getLogin().click();
+    		loginpage.loginAsUser(username, password);
 		
 		//fetching data for registering property using excel file
 		String alternat_mobile =	eus.getExcelData("LoginAdmin", 19, 1)+ranNo;
@@ -119,85 +108,39 @@ public class VerifyThatUserCanEditTheRegisteredProperty {
 				
 				//registering a property into the application
 		UserLoginHome userloginhome=new UserLoginHome(driver);
+		//click on register button
 		userloginhome.getRegisterBtn().click();
 		
 		UserRegisterRoomsPage registerRoomsPage=new UserRegisterRoomsPage(driver);
-		registerRoomsPage.getFullname().sendKeys(fullname);
-		registerRoomsPage.getAlternat_mobile().sendKeys(alternat_mobile);
-		registerRoomsPage.getMobile().sendKeys(mobile);
-		registerRoomsPage.getEmail().sendKeys(email);
-		registerRoomsPage.getPlotNo().sendKeys(plotNo);
-		registerRoomsPage.getRooms().sendKeys(rooms);
-		registerRoomsPage.getCountry().sendKeys(country);
-		registerRoomsPage.getState().sendKeys(state);
-		registerRoomsPage.getCity().sendKeys(city);
-		registerRoomsPage.getRent().sendKeys(rent);
-		registerRoomsPage.getDeposit().sendKeys(deposit);
-		registerRoomsPage.getAccommodation().sendKeys(accommodation);
-		registerRoomsPage.getDescription().sendKeys(description);
-		registerRoomsPage.getLandmark().sendKeys(landmark);
-		registerRoomsPage.getAddress().sendKeys(address);
-		
-		WebElement options = registerRoomsPage.getVacantOrOccupied();
-		
-		Select s=new Select(options);
-		s.selectByIndex(0);
-		
-		//uploading image
-		WebElement scUploadElement = registerRoomsPage.getUploadImg();
-				Thread.sleep(2000);
-				wdus.fileUpload(scUploadElement, "./src/test/resources/Screenshot (38).png");
-				
-				registerRoomsPage.getSubmitRoomsReg().click();
-		Thread.sleep(2000);
-          String successText = registerRoomsPage.getSuccessText().getText();
-		if(successText.contains("successfull"))
-			System.out.println("property registered successfully");
-		else
-			System.out.println("property registration failed");
+		//registering a property using generic methods from pom classes
+		registerRoomsPage.registerRoomsInToApp( fullname,  alternat_mobile,  mobile,  email, plotNo, rooms,country,state,city,rent,deposit ,accommodation, description,landmark,address);
 		
 		//logout as user
 		UserLoginHome userLoginHome=new UserLoginHome(driver);
+		//clcik omn logout button
 		userLoginHome.getLogoutBtn().click();
 		
 		//first log in as user again
 		homePage.getLoginbtn().click();
-
-		loginpage.getUsername().sendKeys(username);
-		loginpage.getPassword().sendKeys(password);
-		loginpage.getLogin().click();
-		
+		loginpage.loginAsUser(username, password);
 		
 		//edit the property
-		userloginhome.getDetailsBtn().click();
 		
+		//click on Details/Update button 
+		userloginhome.getDetailsBtn().click();
+		//click on the edit button for specific room 
 		driver.findElement(By.xpath("//p[contains(.,'"+mobile+"')]/../../..//a")).click();
 		Thread.sleep(2000);
 		WebElement options2 = driver.findElement(By.xpath("//select[@id='vacant']"));
 		Select s1=new Select(options2);
 		s1.selectByValue("1");
-		
 		String otherdetails = eus.getExcelData("LoginAdmin", 34, 1);
 		
 		UserRegisterRoomsPage userRegisterRoomsPage=new UserRegisterRoomsPage(driver);
-		userRegisterRoomsPage.getOtherTxtBx().sendKeys("hello");
-		userRegisterRoomsPage.getSubmitRoomsReg().click();
+		//edit the alternative number of specific room
+		userRegisterRoomsPage.editAltNumber(alternat_mobile,otherdetails, driver);
 
-		userloginhome.getDetailsBtn().click();
-		List<WebElement> allPhones = driver.findElements(By.xpath("//p[contains(.,'Mobile Number')]"));
-		String occupy=null;
-	for(WebElement phone:allPhones) {
-		String phoneNo=phone.getText();
-		if(phoneNo.contains(mobile)) {
-			 occupy = driver.findElement(By.xpath("//p[contains(.,'Occupied')]")).getText();
-		}
-	}
-	
-	if(occupy.equals("Occupied"))
-		System.out.println("Details edited successfully by the user");
-	else
-		System.out.println("Details not edited by the user");
-		driver.close();
+		driver.quit();
 		
 	}
 }

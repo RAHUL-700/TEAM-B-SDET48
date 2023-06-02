@@ -273,7 +273,7 @@ public class WebDriverUtilities {
 		String dateTime=ldt.toString().replace(" ", " ").replace(":","-" );
 		File dest=new File("./screenshots/"+screenshotname+" "+dateTime+".png");
 		FileUtils.copyFile(src,dest);
-		return screenshotname;
+		return screenshotname+dateTime;
 	}
 	/**
 	 * this method is used to switch to window using title
