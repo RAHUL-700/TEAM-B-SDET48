@@ -34,7 +34,7 @@ import com.Twinlite.genericUtilities.WebDriverUtilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyRegisterPropertyisplayedOrNot {
+public class VerifyRegisterPropertyisplayedOrNotTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
